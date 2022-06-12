@@ -1,0 +1,29 @@
+<div>
+    <!-- エラーメッセージの表示 -->
+    <% @post.errors.full_messages.each do |message| %>
+        <div class="error-message">
+            <%= message %>
+        </div>
+    <% end %>
+
+    <div>
+        <h1>更新する</h1>
+        <!-- 更新処理を行うupdateアクションへ飛ばす -->
+        <%= form_with(url: 'http://localhost:3000/main/update', local: true) do |form| %>
+        <!-- コントローラーへidを渡す -->
+        <%= form.hidden_field :id, :value => @post.id %>
+        <div class="input-main">
+            <div>
+                <!-- @post.content で編集する投稿の内容を表示 -->
+                <%= form.text_area :content, :value => @post.content %>
+            </div>
+            
+            <%= form.submit '更新', class: 'button'%>
+            <div class="top-link">
+
+                <%= link_to("投稿一覧へ", "/top") %>
+            </div>
+        </div>
+        <% end %>
+    </div>
+</div>

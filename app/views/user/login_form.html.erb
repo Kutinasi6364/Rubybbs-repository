@@ -1,0 +1,38 @@
+<div>
+    <!-- エラーメッセージの表示 -->
+    <% @user.errors.full_messages.each do |message| %>
+    <div class="error-message">
+        <%= message %>
+    </div>
+    <% end %>
+
+    <% if @logerror != nil %>
+        <div class="error-message">
+            <%= @logerror %>
+        </div>
+    <% end %>
+
+    <div>
+        <h2>ログイン</h2>
+        <%= form_with(url: 'http://localhost:3000/user/login', local: true) do |form| %>
+        <div class="input-main">
+            <div class="input-area">
+                名前を入力してください
+                <div>
+                    <%= form.text_field :name %>
+                </div>
+                ※8文字以内
+            </div>
+
+            <div class="input-area">
+                パスワードを入力してください
+                <div>
+                    <%= form.password_field :password %>
+                </div>
+                ※4文字以上10文字以内
+            </div>
+            <%= form.submit 'ログイン', class: 'button' %>
+        </div>
+        <% end %>
+    </div>
+</div>

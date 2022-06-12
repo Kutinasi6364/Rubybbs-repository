@@ -1,0 +1,30 @@
+<div>
+    <!-- エラーメッセージの表示 -->
+    <% @post.errors.full_messages.each do |message| %>
+    <div class="error-message">
+        <%= message %>
+    </div>
+    <% end %>
+
+    <div>
+        <h1>削除確認する</h1>
+        <!-- 削除処理を行うdestroyアクションへ飛ばす -->
+        <%= form_with(url: 'http://localhost:3000/main/destroy', local: true, method: :delete) do |form| %>
+
+            <!-- コントローラーへidを渡す -->
+            <%= form.hidden_field :id, :value => @post.id %>
+            <div class="input-main">
+                <div>
+                    <!-- 削除する投稿の内容を表示 -->
+                    <%= simple_format(@post.content) %>
+                </div>
+
+                <%= form.submit '削除', class: 'button'%>
+                
+                <div class="top-link">
+                    <%= link_to("投稿一覧へ", "/top") %>
+                </div>
+            </div>
+        <% end %>
+    </div>
+</div>

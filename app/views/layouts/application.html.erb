@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>BulletinBoard</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag  'application', media: 'all', 'data-turbo-track': 'reload' %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body class="main-body">
+    <header>
+      <ul class="header-menu">
+        <!-- ログインしているユーザーチェック -->
+        <% if @current_user %>
+          <li>
+            <%= "現在ログインしているのは'#{@current_user.name}'です" %>
+          </li>
+            <% if @current_action != "top" %>
+              <li>
+                <%= link_to("トップ", "/") %>
+              </li>
+            <% end %>
+          <li>
+            <%= link_to("ログアウト", "/user/logout", data: { turbo_method: :post } ) %>
+          </li>
+        <% else %>
+          <% if @current_action != "top" %>
+            <li>
+              <%= link_to("トップ", "/") %>
+            </li>
+          <% end %>
+          <% if @current_action != "signup" %>
+            <li>
+              <%= link_to("新規登録", "/user/signup" )%>
+            </li>
+          <% end %>
+          <% if @current_action != "login_form" %>
+            <li>
+              <%= link_to("ログイン", "/user/login_form" )%>
+            </li>
+          <% end %>
+          
+        <% end %>
+      </ul>
+    </header>
+
+    <% if flash[:notice] %>
+      <div class="flash">
+        <%= flash[:notice] %>
+      </div>
+    <% end %>
+    
+    <%= yield %>
+  </body>
+</html>

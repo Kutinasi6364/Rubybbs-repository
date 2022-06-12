@@ -1,0 +1,28 @@
+<div>
+    <% @posts.each do |post| %>
+      <div class="content-show">
+        <div><%= simple_format(post.content) %></div>
+
+        <!-- post.users.name でユーザー名の取得 -->
+        <div class="content-name">投稿者 <%= post.user.name %>
+          <!-- ログインしているユーザーが投稿した場合表示 -->
+          <% if @current_user && post.user_id == @current_user.id %>
+            <%= link_to("編集", "/main/#{post.id}/edit") %>  <%= link_to("削除", "/main/#{post.id}/delete")%>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+
+  <div>
+    <h2>投稿する</h2>
+    <%= form_with(url: 'http://localhost:3000/main/create', local: true) do |form| %>
+      <div class="input-main">
+        <div>
+          <%= form.text_area :content %>
+        </div>
+
+        <%= form.submit '送信', class: 'button'%>
+      </div>
+    <% end %>
+  </div>
+</div>
